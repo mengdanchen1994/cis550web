@@ -42,7 +42,7 @@
           <li class="active"><a href="/hotel" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Hotel</a></li>
           <li class="active"><a href="/entertainment" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Entertainment</a></li>
           <li class="active"><a href="/signage" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Signage</a></li>
-          <li><a href="#section-contact" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Contact</a></li>
+          <li><a href="#footer" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Share</a></li>
 </ul>
       </div>
       <!--/.navbar-collapse -->
@@ -50,6 +50,7 @@
   </div>
 
   <section class="featured" style="background-image: url(http://localhost:8080/img/parallax/entertainmentbg.jpg);">
+    <div ng-controller="myEntertainmentController">
     <div class="container">
       <div class="row mar-bot40">
         <div class="col-md-6 col-md-offset-3">
@@ -60,13 +61,26 @@
             <p>
               Please choose your location: 
             </p>
-<div ng-controller="myEntertainmentController">
+
               <select name = "streetname" ng-model="streetname" style="color:black">
-              <option value="all">All</option>
-  <option value ="43 st">43 st</option>
-  <option value ="42 st">42 st</option>
-  <option value="41 st">41 st</option>
-  <option value="40 st">40 st</option>
+<option value="all">All</option>
+  <option value ="41 st">41 st</option>
+  <option value="42 st">42 st</option>
+  <option value="43 st">43 st</option>
+  <option value ="44 st">44 st</option>
+  <option value ="45 st">45 st</option>
+  <option value ="46 st">46 st</option>
+  <option value ="47 st">47 st</option>
+  <option value ="48 st">48 st</option>
+  <option value ="49 st">49 st</option>
+  <option value ="50 st">50 st</option>
+  <option value ="51 st">51 st</option>
+  <option value ="52 st">52 st</option>
+  <option value ="7 ave">7 ave</option>
+  <option value ="8 ave">8 ave</option>
+  <option value ="broadway">broadway</option>
+  <option value ="storefront">storefront</option>
+  <option value ="times sq">times sq</option>
 </select >
 <p>
               Please choose entertainment type: 
@@ -76,33 +90,35 @@
   <option value ="nightclub">nightclub</option>
   <option value ="theater">theater</option>
   <option value="movies">movies</option>
+    <option value="lecture hall">lecture hall</option>
+  <option value="museums / galleries">museums/galleries</option>
+  <option value="attractions / amusement">attractions/amusement</option>
+  <option value="live music">live music</option>
   <option value="comedy club">comedy club</option>
 </select>
-
-
-
-        
-        <button type="button" ng-click="Submit()" class="btn btn-theme pull-right">Search</button>
         <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
             </h3>
+                    <button type="button" ng-click="Submit()" class="btn btn-theme pull" style="color:black">Search</button>
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
-         <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="500" align="center"> 
+        </div>
+        <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
             <tr> 
             <th>  Name </td>
             <th>  Type </td>
             <th>  Streetname </td>
             <th>  Building </td>
+            <th > Maps </th>
             <tr ng-repeat="x in data"> 
             <td> {{x.NAME}} </td>
             <td> {{x.TYPE}} </td>
             <td> {{x.STREETNAME}} </td>
             <td> {{x.BUILDING}} </td>
+            <td> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Google Maps</button></td>
             </tr>
         </table>
-        </div>
     </div>
   </section>
 
@@ -348,7 +364,7 @@
       function initMap() {
         var uluru = {lat: 40.7589, lng: -73.9851};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
+          zoom: 12,
           center: uluru
         });
         var marker = new google.maps.Marker({
@@ -367,28 +383,79 @@
     <div class="container">
       <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
         <div class="col-sm-12 align-center">
-          <ul class="social-network social-circle">
-            <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a></li>
-            <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
-            <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-          </ul>
-        </div>
-      </div>
+          <div id="share-buttons">
+    
+    <!-- Buffer -->
+    <a href="https://bufferapp.com/add?url=https://simplesharebuttons.com&amp;text=Simple Share Buttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/buffer.png" alt="Buffer" />
+    </a>
+    
+    <!-- Digg -->
+    <a href="http://www.digg.com/submit?url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" />
+    </a>
+    
+    <!-- Email -->
+    <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://simplesharebuttons.com">
+        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+    </a>
+ 
+    <!-- Facebook -->
+    <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+    </a>
+    
+    <!-- Google+ -->
+    <a href="https://plus.google.com/share?url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
+    </a>
+    
+    <!-- LinkedIn -->
+    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
+    </a>
+    
+    <!-- Pinterest -->
+    <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());">
+        <img src="https://simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" />
+    </a>
+    
+    <!-- Print -->
+    <a href="javascript:;" onclick="window.print()">
+        <img src="https://simplesharebuttons.com/images/somacro/print.png" alt="Print" />
+    </a>
+    
+    <!-- Reddit -->
+    <a href="http://reddit.com/submit?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+    </a>
+    
+    <!-- StumbleUpon-->
+    <a href="http://www.stumbleupon.com/submit?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" />
+    </a>
+    
+    <!-- Tumblr-->
+    <a href="http://www.tumblr.com/share/link?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/tumblr.png" alt="Tumblr" />
+    </a>
+     
+    <!-- Twitter -->
+    <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+    </a>
+    
+    <!-- VK -->
+    <a href="http://vkontakte.ru/share.php?url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/vk.png" alt="VK" />
+    </a>
+    
+    <!-- Yummly -->
+    <a href="http://www.yummly.com/urb/verify?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/yummly.png" alt="Yummly" />
+    </a>
 
-      <div class="row align-center copyright">
-        <div class="col-sm-12">
-          
-          <div class="credits">
-            <!--
-              All the links in the footer should remain intact.
-              You can delete the links only if you purchased the pro version.
-              Licensing information: https://bootstrapmade.com/license/
-              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Amoeba
-            -->
-          
-          </div>
+</div>
         </div>
       </div>
     </div>

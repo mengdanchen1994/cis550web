@@ -16,12 +16,28 @@ router.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
+router.get('/fb', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'testfacebook.html'));
+});
+
 router.get('/food', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'food.html'));
 });
 
+router.get('/food2', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'violation.html'));
+});
+
 router.get('/hotel', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'hotel.html'));
+});
+
+router.get('/hotel2', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'hotel2.html'));
+});
+
+router.get('/hotel3', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../', 'views', 'hotel3.html'));
 });
 
 router.get('/entertainment', function(req, res, next) {
@@ -39,11 +55,11 @@ router.get('/data/:name', function(req,res) {
   var name = req.params.name;
   console.log(name)
   if (name != 'undefined') {
-    var query1 = 'SELECT NAME AS NAME, "FOOD" AS TYPE, STREETNAME AS STREETNAME, BUILDING AS BUILDING from Food where NAME LIKE "%' + name + '%"' ;
-    var query2 = 'SELECT NAME AS NAME, "HOTEL" AS TYPE, STREETNAME AS STREETNAME, BUILDING AS BUILDING from Hotel where NAME LIKE "%' + name + '%"' ;
-    var query3 = 'SELECT NAME AS NAME, "Entertainment" AS TYPE, STREETNAME AS STREETNAME, BUILDING AS BUILDING from Entertainment where NAME LIKE "%' + name + '%"' ;
-    var query4 = 'SELECT NAME AS NAME, "SIGNAGE" AS TYPE, STREETNAME AS STREETNAME, BUILDING AS BUILDING from Signage where NAME LIKE "%' + name + '%"' ;
-    query = query1 +' UNION '+ query2 + ' UNION ' + query3 + ' UNION ' + query4;
+    var query1 = 'SELECT NAME, "Restuarant" AS TYPE, STREETNAME, LATITUDE, LONGITUDE, BUILDING from Food where NAME LIKE "%' + name + '%"' ;
+    var query2 = 'SELECT NAME, "Hotel" AS TYPE, STREETNAME, LATITUDE, LONGITUDE, BUILDING from Hotel where NAME LIKE "%' + name + '%"' ;
+    var query3 = 'SELECT NAME, "Entertainment" AS TYPE, STREETNAME, LATITUDE, LONGITUDE, BUILDING from Entertainment where NAME LIKE "%' + name + '%"' ;
+    var query4 = 'SELECT NAME AS NAME, "Signage" AS TYPE, STREETNAME AS STREETNAME, NULL AS LATITUDE, NULL AS LONGITUDE, BUILDING AS BUILDING from Signage where NAME LIKE "%' + name + '%"' ;
+    query = query1 +' UNION '+ query2 + ' UNION ' + query3 + ' UNION '+ query4;
   }
   console.log(query);
   connection.query(query, function(err, rows, fields) {
@@ -88,28 +104,111 @@ router.get('/datafood/:values', function(req,res) {
     });
 });
 
-router.get('/datahotel/:values', function(req,res) {
+router.get('/datafoodname/:newname', function(req,res) {
   // use console.log() as print() in case you want to debug, example below:
   // console.log("inside person email");
+  var query = '';
+  var value = req.params.newname.split('+');
+  var name = value[0];
+  var streetname = value[1];
+  var building = value[2];
+  console.log("newname:"+name);
+  if (name != 'undefined') {
+    query = 'SELECT * from InspectionResult where NAME = "' + name + '" AND STREETNAME = "'+streetname+'" AND BUILDING = "'+building+'"' ; 
+  }
+  console.log(query);
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+        res.json(rows);
+    }  
+    });
+});
+
+router.get('/datahotelname/:newname', function(req,res) {
+  // use console.log() as print() in case you want to debug, example below:
+  // console.log("inside person email");
+  var query = '';
+  var value = req.params.newname.split('+');
+  var name = value[0];
+  var streetname = value[1];
+  var building = value[2];
+  console.log("newname:"+name);
+  if (name != 'undefined') {
+   var query = 'SELECT F.NAME AS NAME, F.STREETNAME AS STREETNAME,F.CUISINE AS CUISINE, F.BUILDING AS BUILDING, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Food F CROSS JOIN Hotel H WHERE H.NAME = "'+ name +'" AND H.STREETNAME = "'+streetname+'" AND H.BUILDING= "'+building+'" HAVING DISTENCE<0.00045 ORDER BY DISTENCE ASC';
+  }
+  console.log(query);
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+        res.json(rows);
+    }  
+    });
+});
+
+router.get('/datahotelthreename/:newname', function(req,res) {
+  // use console.log() as print() in case you want to debug, example below:
+  // console.log("inside person email");
+  var query = '';
+  var value = req.params.newname.split('+');
+  var name = value[0];
+  var streetname = value[1];
+  var building = value[2];
+  console.log("newname:"+name);
+  if (name != 'undefined') {
+   var query = 'SELECT F.NAME AS NAME, F.STREETNAME AS STREETNAME, F.BUILDING AS BUILDING, F.TYPE AS TYPE, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Entertainment F CROSS JOIN Hotel H WHERE H.NAME = "'+ name +'" AND H.STREETNAME = "'+streetname+'" AND H.BUILDING= "'+building+'" HAVING DISTENCE<0.00045 ORDER BY DISTENCE ASC';
+  }
+  console.log(query);
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+        res.json(rows);
+    }  
+    });
+});
+
+router.get('/datahotel/:values', function(req,res) {
   var value = req.params.values.split('&');
-  var first = 'SELECT H.NAME AS NAME, H.STREETNAME AS STREETNAME, H.BUILDING AS BUILDING, COUNT(*) as RESTUARANT_AMOUNT from Hotel H left join Food F on H.BUILDING = F.BUILDING';
-  var second = ' group by H.STREETNAME, H.NAME, H.BUILDING, H.ZIPCODE, H.PHONENUMBER, H.WEBSITE'
-  var query = first + second;
   var streetname = value[0];
   var preferance = value[1];
+  var first = 'SELECT H_FOOD.NAME AS NAME, H_FOOD.STREETNAME AS STREETNAME, H_FOOD.BUILDING AS BUILDING, H_FOOD.REST_N AS REST_N, H_ENT.ENT_N AS ENT_N FROM (SELECT HH.NAME AS NAME, HH.STREETNAME AS STREETNAME, HH.BUILDING AS BUILDING, COALESCE(NEW_HOTEL.ENT_COUNT,0) AS ENT_N FROM (SELECT A.NAME AS NAME, A.STREETNAME AS STREETNAME, A.BUILDING AS BUILDING, COUNT(DISTENCE) AS ENT_COUNT FROM (SELECT  H.NAME, H.STREETNAME, H.BUILDING, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Entertainment F CROSS JOIN Hotel H HAVING DISTENCE<0.00045) A group by A.NAME, A.STREETNAME, A.BUILDING ORDER BY A.NAME) NEW_HOTEL RIGHT JOIN Hotel HH on NEW_HOTEL.NAME = HH.NAME AND NEW_HOTEL.STREETNAME = HH.STREETNAME AND NEW_HOTEL.BUILDING =HH.BUILDING'
+  var second = ') H_ENT LEFT JOIN (SELECT HH.NAME AS NAME, HH.STREETNAME AS STREETNAME, HH.BUILDING AS BUILDING, COALESCE(NEW_HOTEL.REST_COUNT,0) AS REST_N FROM (SELECT A.NAME AS NAME, A.STREETNAME AS STREETNAME, A.BUILDING AS BUILDING, COUNT(DISTENCE) AS REST_COUNT FROM (SELECT  H.NAME, H.STREETNAME, H.BUILDING, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Food F CROSS JOIN Hotel H HAVING DISTENCE<0.00045) A group by A.NAME, A.STREETNAME, A.BUILDING ORDER BY A.NAME) NEW_HOTEL RIGHT JOIN Hotel HH on NEW_HOTEL.NAME = HH.NAME AND NEW_HOTEL.STREETNAME = HH.STREETNAME AND NEW_HOTEL.BUILDING =HH.BUILDING) H_FOOD ON H_FOOD.NAME = H_ENT.NAME AND H_FOOD.STREETNAME=H_ENT.STREETNAME AND H_FOOD.BUILDING=H_ENT.BUILDING '
+  var query = first + second;
+  if (streetname != 'all') {
+    first = first + ' WHERE HH.STREETNAME = "' + streetname + '"';
+    query = first + second;
+  }
+  // var value = req.params.values.split('&');
+  // var first = ' (SELECT HH.NAME AS NAME, HH.STREETNAME AS STREETNAME, HH.BUILDING AS BUILDING, COALESCE(NEW_HOTEL.ENT_COUNT,0) AS ENT_N FROM (SELECT A.NAME AS NAME, A.STREETNAME AS STREETNAME, A.BUILDING AS BUILDING, COUNT(DISTENCE) AS ENT_COUNT FROM (SELECT  H.NAME, H.STREETNAME, H.BUILDING, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Entertainment F CROSS JOIN Hotel H HAVING DISTENCE<0.00045) A';
+  // var second = ' group by A.NAME, A.STREETNAME, A.BUILDING ORDER BY A.NAME) NEW_HOTEL RIGHT JOIN Hotel HH on NEW_HOTEL.NAME = HH.NAME AND NEW_HOTEL.STREETNAME = HH.STREETNAME AND NEW_HOTEL.BUILDING =HH.BUILDING) H_ENT'
+  // var first_two = '(SELECT HH.NAME AS NAME, HH.STREETNAME AS STREETNAME, HH.BUILDING AS BUILDING, COALESCE(NEW_HOTEL.REST_COUNT,0) AS REST_N FROM (SELECT A.NAME AS NAME, A.STREETNAME AS STREETNAME, A.BUILDING AS BUILDING, COUNT(DISTENCE) AS REST_COUNT FROM (SELECT  H.NAME, H.STREETNAME, H.BUILDING, SQRT(POW(F.LONGITUDE-H.LONGITUDE,2) + POW(F.LATITUDE-H.LATITUDE,2)) AS DISTENCE from Food F CROSS JOIN Hotel H HAVING DISTENCE<0.00045) A'
+  // var second_two = ' group by A.NAME, A.STREETNAME, A.BUILDING ORDER BY A.NAME) NEW_HOTEL RIGHT JOIN Hotel HH on NEW_HOTEL.NAME = HH.NAME AND NEW_HOTEL.STREETNAME = HH.STREETNAME AND NEW_HOTEL.BUILDING =HH.BUILDING) H_FOOD ON H_FOOD.NAME = H_ENT.NAME AND H_FOOD.STREETNAME=H_ENT.STREETNAME AND H_FOOD.BUILDING=H_ENT.BUILDING '
+  // var query_one = first + second;
+  // var query_two = first_two + second;
+  // var query = 'SELECT H_FOOD.NAME AS NAME, H_FOOD.STREETNAME AS STREETNAME, H_FOOD.BUILDING AS BUILDING, H_FOOD.REST_N AS REST_N, H_ENT.ENT_N AS ENT_N FROM' + query_one + ' LEFT JOIN' + query_two + ' ORDER BY REST_N, ENT_N'
+  // var streetname = value[0];
+  // var preferance = value[1];
 
   
-  if (streetname != 'all') {
-    first = first + ' WHERE H.STREETNAME = "' + streetname + '"';
-    query = first + second;
-
-  }
+  // if (streetname != 'all') {
+  //   first = first + ' WHERE H.STREETNAME = "' + streetname + '"';
+  //   first_two = first_two + ' WHERE H.STREETNAME = "' + streetname + '"'
+  // var query_one = first + second;
+  // var query_two = first_two + second;
+  // var query = 'SELECT A.NAME, A.STREETNAME, A.BUILDING, A.RESTUARANT_AMOUNT as RESTUARANT_AMOUNT, B.ENTERTAINMENT_AMOUNT as ENTERTAINMENT_AMOUNT FROM ('+ query_two+') A LEFT JOIN ('+query_one+') B ON A.NAME = B.NAME AND A.STREETNAME = B.STREETNAME AND A.BUILDING = B.BUILDING';
+  // }
   if(preferance != 'all') {
-    if(preferance == 'ASC') {
-      query = query + ' ORDER BY RESTUARANT_AMOUNT ASC';
+    if(preferance == 'Food ASC') {
+      query = query + ' ORDER BY RES_N ASC';
+    } else if (preferance == 'Food DESC') {
+      query = query + ' ORDER BY REST_N DESC';
+    } else if (preferance =='Ent ASC') {
+            query = query + ' ORDER BY ENT_N ASC';
     } else {
-      query = query + ' ORDER BY RESTUARANT_AMOUNT DESC';
+          query = query + ' ORDER BY ENT_N DESC';
     }
+  } else {
+    query = query + 'ORDER BY REST_N DESC, ENT_N DESC;'
   }
   console.log(query);
   connection.query(query, function(err, rows, fields) {
