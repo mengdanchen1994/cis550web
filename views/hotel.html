@@ -28,6 +28,7 @@
 </head>
 
 <body>
+  <div ng-controller="myHotelController">
   <section id="header" class="appear"></section>
   <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
     <div class="container">
@@ -64,7 +65,7 @@
             <p >
               Please choose your location: 
             </p>
-            <div ng-controller="myHotelController">
+            
               <select name = "streetname" ng-model="streetname" style="color:black">
               <option value="all">All</option>
   <option value ="41 st">41 st</option>
@@ -101,13 +102,18 @@
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
-     <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+     
+        </div>
+    </div>
+    <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
             <tr> 
             <th>  Name </td>
             <th>  Streetname </td>
             <th>  Building </td>
             <th>  Restuarant Count </td>
             <th> Entertainment Count </th>
+             <th> Phone Number</th>
+            <th> Website </th>
             <th > Maps </th>
             <tr ng-repeat="x in data"> 
             <td> {{x.NAME}} </td>
@@ -115,6 +121,8 @@
             <td> {{x.BUILDING}} </td>
             <td> <a href="", onclick="c1(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.REST_N}} </a></td>
             <td><a href="", onclick="c2(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.ENT_N}}</a></td>
+            <td> {{x.PHONENUMBER}}</td>
+            <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
             <td> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Google Maps</a></td>
             </tr>
              <script language=javascript type="text/javascript">
@@ -130,8 +138,6 @@
     }  
 </script>
         </table>
-        </div>
-    </div>
   </section>
 
   <!-- services -->

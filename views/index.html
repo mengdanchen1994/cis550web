@@ -27,6 +27,7 @@
 </head>
 
 <body>
+        <div ng-controller="myController">
   <section id="header" class="appear"></section>
   <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
     <div class="container">
@@ -65,7 +66,6 @@
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               This is Time Square Travel Guide. You can find most popular resturants, hotels, entertainments and signages near Time Square.
             </h3>
-			<div ng-controller="myController">
             <input name="name" ng-model="name" value="eg.hilton, starbuck" style="color:black">
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
@@ -75,23 +75,28 @@
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
-		        <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+		        
+		</div>
+    </div>
+    <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
             <tr> 
             <th>  Name </td>
             <th>  Type </td>
             <th>  Streetname </td>
             <th>  Building </td>
+            <th> Phone Number</th>
+            <th> Website </th>
             <th > Maps </th>
             <tr ng-repeat="x in data"> 
             <td> {{x.NAME}} </td>
             <td> {{x.TYPE}} </td>
             <td> {{x.STREETNAME}} </td>
             <td> {{x.BUILDING}} </td>
+            <td> {{x.PHONENUMBER}}</td>
+            <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
              <td> <a href="#section-map" ng-click="initMap(x.LATITUDE,x.LONGITUDE)">Google Maps</a></td>
             </tr>
         </table>
-		</div>
-    </div>
   </section>
 
   
@@ -405,7 +410,12 @@
                 <div class="validation"></div>
               </div>
 
-              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
+              <a type="button" href="#header" onclick="sentmessage()" class="btn btn-theme pull-left">SEND MESSAGE</a>
+              <script type="text/javascript">
+                function sentmessage() {
+                  alert("Thank you for sending us your message!\nWe have already recieved your message!\nWe will reply to you ASAP!")
+                }
+              </script>
             </form>
 
           </div>

@@ -64,17 +64,21 @@
             <th> StreetName </th>
             <th> Building </th>
             <th> Cuisine </td>
-            <th> Distence </td>
-      
+            <th> Distence(km)</td>
+            <th> Phone Number</th>
+            <th> Website </th>
             <tr ng-repeat="x in data"> 
             <td> {{x.NAME}} </td>
             <td> {{x.STREETNAME}} </td>
             <td> {{x.BUILDING}} </td>
             <td> {{x.CUISINE}} </td>
-            <td> {{x.DISTENCE}} </td>
+            <td> {{x.DISTENCE}}</td>
+            <td> {{x.PHONENUMBER}}</td>
+           <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
       </tr>
       </tr>
 </table>
+
 
     </div>
   </section>
