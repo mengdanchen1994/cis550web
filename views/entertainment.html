@@ -107,6 +107,7 @@
         </div>
         
     </div>
+<<<<<<< HEAD
     <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1100" align="center"> 
             <tr> 
             <th style="text-align:center;">  Name </td>
@@ -140,6 +141,26 @@
          
     }  
 </script>
+=======
+    <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+            <tr> 
+            <th>  Name </td>
+            <th>  Type </td>
+            <th>  Streetname </td>
+            <th>  Building </td>
+              <th> Phone Number</th>
+            <th> Website </th>
+            <th > Maps </th>
+            <tr ng-repeat="x in data"> 
+            <td> {{x.NAME}} </td>
+            <td> {{x.TYPE}} </td>
+            <td> {{x.STREETNAME}} </td>
+            <td> {{x.BUILDING}} </td>
+            <td> {{x.PHONENUMBER}}</td>
+            <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+            <td> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Google Maps</button></td>
+            </tr>
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
         </table>
   </section>
 

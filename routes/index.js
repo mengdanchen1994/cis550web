@@ -143,6 +143,7 @@ router.get('/datahotelname/:newname', function(req,res) {
   var building = value[2];
   console.log("newname:"+name);
   if (name != 'undefined') {
+<<<<<<< HEAD
    var query = 'SELECT F.NAME AS NAME, F.STREETNAME AS STREETNAME,F.CUISINE AS CUISINE, F.BUILDING AS BUILDING, F.PHONENUMBER, F.WEBSITE, 111.111* DEGREES(ACOS(COS(RADIANS(H.LATITUDE))* COS(RADIANS(F.LATITUDE))* COS(RADIANS(F.LONGITUDE - H.LONGITUDE))+ SIN(RADIANS(H.LATITUDE))* SIN(RADIANS(F.LATITUDE)))) AS DISTENCE from Food F CROSS JOIN Hotel H WHERE H.NAME = "'+ name +'" AND H.STREETNAME = "'+streetname+'" AND H.BUILDING= "'+building+'" HAVING DISTENCE<0.1 ORDER BY DISTENCE ASC';
   }
   console.log(query);
@@ -164,7 +165,11 @@ router.get('/datahotelthreename/:newname', function(req,res) {
   var building = value[2];
   console.log("newname:"+name);
   if (name != 'undefined') {
+<<<<<<< HEAD
    var query = 'SELECT F.NAME AS NAME, F.STREETNAME AS STREETNAME, F.BUILDING AS BUILDING, F.TYPE AS TYPE, F.PHONENUMBER, F.WEBSITE, 111.111* DEGREES(ACOS(COS(RADIANS(H.LATITUDE))* COS(RADIANS(F.LATITUDE))* COS(RADIANS(F.LONGITUDE - H.LONGITUDE))+ SIN(RADIANS(H.LATITUDE))* SIN(RADIANS(F.LATITUDE)))) AS DISTENCE from Entertainment F CROSS JOIN Hotel H WHERE H.NAME = "'+ name +'" AND H.STREETNAME = "'+streetname+'" AND H.BUILDING= "'+building+'" HAVING DISTENCE<0.1 ORDER BY DISTENCE ASC';
+=======
+   var query = 'SELECT F.NAME AS NAME, F.STREETNAME AS STREETNAME, F.BUILDING AS BUILDING, F.TYPE AS TYPE, F.PHONENUMBER, F.WEBSITE, 111.111* DEGREES(ACOS(COS(RADIANS(H.LATITUDE))* COS(RADIANS(F.LATITUDE))* COS(RADIANS(F.LONGITUDE - H.LONGITUDE))+ SIN(RADIANS(H.LATITUDE))* SIN(RADIANS(F.LATITUDE)))) AS DISTENCE from Entertainment F CROSS JOIN Hotel H WHERE H.NAME = "'+ name +'" AND H.STREETNAME = "'+streetname+'" AND H.BUILDING= "'+building+'" HAVING DISTENCE<0.05 ORDER BY DISTENCE ASC';
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
   }
   console.log(query);
   connection.query(query, function(err, rows, fields) {

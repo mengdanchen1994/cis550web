@@ -62,6 +62,7 @@
              
             </h3>
             <tr> 
+<<<<<<< HEAD
             <th "text-align:center;"> Name </td>
             <th "text-align:center;"> Street</th>
             <th "text-align:center;"> Building </th>
@@ -77,6 +78,22 @@
             <td "text-align:center;"> {{x.DISTENCE}}</td>
             <td "text-align:center;"> {{x.PHONENUMBER}}</td>
            <td "text-align:center;"> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+=======
+            <th> Name </td>
+            <th> StreetName </th>
+            <th> Building </th>
+            <th> Cuisine </td>
+            <th> Distence(km)</td>
+            <th> Website </th>
+            <tr ng-repeat="x in data"> 
+            <td> {{x.NAME}} </td>
+            <td> {{x.STREETNAME}} </td>
+            <td> {{x.BUILDING}} </td>
+            <td> {{x.CUISINE}} </td>
+            <td> {{x.DISTENCE}}</td>
+            <td> {{x.PHONENUMBER}}</td>
+           <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
       </tr>
       </tr>
 </table>

@@ -106,6 +106,7 @@
      
         </div>
     </div>
+<<<<<<< HEAD
     <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1100" align="center"> 
             <tr> 
             <th style="text-align:center;">  Name </td>
@@ -126,6 +127,28 @@
             <td style="text-align:center;"> <a href="" onclick="web(this);" id="{{x.WEBSITE}}">{{x.WEBSITE}}</a></td>
             <td style="text-align:center;"> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Get route</a></td>
 			</tr>
+=======
+    <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+            <tr> 
+            <th>  Name </td>
+            <th>  Streetname </td>
+            <th>  Building </td>
+            <th>  Restuarant Count </td>
+            <th> Entertainment Count </th>
+             <th> Phone Number</th>
+            <th> Website </th>
+            <th > Maps </th>
+            <tr ng-repeat="x in data"> 
+            <td> {{x.NAME}} </td>
+            <td> {{x.STREETNAME}} </td>
+            <td> {{x.BUILDING}} </td>
+            <td> <a href="", onclick="c1(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.REST_N}} </a></td>
+            <td><a href="", onclick="c2(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.ENT_N}}</a></td>
+            <td> {{x.PHONENUMBER}}</td>
+            <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+            <td> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Google Maps</a></td>
+            </tr>
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
              <script language=javascript type="text/javascript">
     function c1(obj) {  
          var hotelname = obj.id;

@@ -51,8 +51,11 @@
 
   <section class="featured" style="background-image: url(http://localhost:8080/img/parallax/signagebg.jpg);">
   <div ng-controller="myhotelthreeController" ng-init="Submit()">
+<<<<<<< HEAD
   	         <div class="align-center">
             <h2 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Entertainments Nearby</h2>
+=======
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
   <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1000" align="center"> 
   <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
@@ -61,6 +64,7 @@
              
             </h3>
             <tr> 
+<<<<<<< HEAD
             <th "text-align:center;"> Name </td>
             <th "text-align:center;"> Street </th>
             <th "text-align:center;"> Building </th>
@@ -76,6 +80,23 @@
             <td "text-align:center;"> {{x.DISTENCE}} </td>
              <td "text-align:center;"> {{x.PHONENUMBER}}</td>
             <td "text-align:center;"> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+=======
+            <th> Name </td>
+            <th> StreetName </th>
+            <th> Building </th>
+            <th> Type </td>
+            <th> Distence(km) </td>
+                <th> Phone Number</th>
+            <th> Website </th>
+            <tr ng-repeat="x in data"> 
+            <td> {{x.NAME}} </td>
+            <td> {{x.STREETNAME}} </td>
+            <td> {{x.BUILDING}} </td>
+            <td> {{x.TYPE}} </td>
+            <td> {{x.DISTENCE}} </td>
+             <td> {{x.PHONENUMBER}}</td>
+            <td> <a href="http://{{x.WEBSITE}}" target="_blank">{{x.WEBSITE}}</a></td>
+>>>>>>> 8fee372ffc8f541b0accf448368bd7de7e01c016
       </tr>
       </tr>
 </table>
