@@ -43,99 +43,74 @@
           <li class="active"><a href="/hotel" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Hotel</a></li>
           <li class="active"><a href="/entertainment" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Entertainment</a></li>
           <li class="active"><a href="/signage" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Signage</a></li>
-                    <li class="active"><a href="/subway" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Subway</a></li>		  
+          <li class="active"><a href="/subway" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Subway</a></li>
 		  <li><a href="#footer" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Share</a></li>
-</ul>
+		  </ul>
       </div>
       <!--/.navbar-collapse -->
     </div>
   </div>
 
-  <section class="featured" style="background-image: url(http://localhost:8080/img/parallax/signagebg.jpg);">
+  <section class="featured" style="background-size: auto 100%; background-position: center; background-image: url(http://localhost:8080/img/parallax/subwaybackground.jpg); background-repeat: repeat-x; background-color:white;">
     <div class="container">
       <div class="row mar-bot40">
         <div class="col-md-6 col-md-offset-3">
 
           <div class="align-center">
-            <h2 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Find Signages Near Time Square</h2>
-            <p>
-              Please choose your location: 
-            </p>
-<div ng-controller="mySignageController">
-              <select name = "streetname" ng-model="streetname" style="color:black">
-              <option value="all">All</option>
-  <option value="42 st">42 st</option>
-  <option value ="47 st">47 st</option>
-  <option value ="7 ave">7 ave</option>
-  <option value ="broadway">broadway</option>
-  <option value ="military island">military island</option>
-  <option value ="times sq">times sq</option>
-</select >
-<p>
-              Please Choose Size: 
-            </p>
-            <select name = "size" ng-model="size" style="color:black">
-              <option value="all">All</option>
-  <option value ="marquee">Marquee</option>
-  <option value ="above 65 ft">Above 65 ft</option>
-  <option value="under 65 ft">Under 65fts</option>
-</select>
+            <h2 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Ride Subway to Times Square</h2>
 
+<div ng-controller="mySubwayController">
+  <p>{{message}}</p>
+  <p>
+    Your location:
+  </p>
+  <input type="number" id="input-user-longitude" placeholder="Longitude (W)" style="min-width: 180px; color:black;" ng-model="user.longitude" name="user.longitude" min="-180" max="180" required="true" />
+  <input type="number" id="input-user-latitude" placeholder="Latitude (N)" style="min-width: 180px; color:black;" ng-model="user.latitude" name="user.latitude" min="-180" max="180" required="true" />
 
-        
-          <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
-              
-            </h3>
-                    <button type="button" ng-click="Submit();showme1=true" class="btn btn-theme pull" style="color:black">Search</button>
+  <p>
+    Your destination:
+  </p>
+  <input type="number" id="input-dest-longitude" placeholder="Longitude (W)" style="min-width: 180px; color:black;" ng-model="dest.longitude" name="dest.longitude" min="-180" max="180" required="true" />
+  <input type="number" id="input-dest-latitude" placeholder="Latitude (N)" style="min-width: 180px; color:black;" ng-model="dest.latitude" name="dest.latitude" min="-180" max="180" required="true" />
 
-            <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
-             
-            </h3>
-           <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+  <!-- <p>
+    Max number of transfers:
+  </p>
+  <select id="input-max-transfer" name = "max-transfers" ng-model="maxtransfers" style="min-width: 100px; color:black">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select > -->
 
-            <tr> 
-            <th style="text-align:center;">  Name </td>
-            <th style="text-align:center;">  Size </td>
-            <th style="text-align:center;">  Street </td>
-            <th style="text-align:center;">  Building </td>
-            <th style="text-align:center;"> Get direction </th>
-            <tr id = "somerow" ng-repeat="x in data"> 
-            <td style="text-align:center;"> {{x.NAME}} </td>
-            <td style="text-align:center;"> {{x.HEIGHT}} </td>
-            <td style="text-align:center;"> {{x.STREETNAME}} </td>
-            <td style="text-align:center;"> {{x.BUILDING}} </td>
-            <td style="text-align:center;"> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';",, target="_blank">Get route</button></td>
+  <button type="button" ng-click="Submit();showme1=true" class="btn btn-theme pull-right">Search</button>
 
-            </tr>
-        </table>
-        </div>
+  <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="500" align="center">
+   <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
+
+     </h3>
+     <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
+
+     </h3>
+     <tr>
+     <th style="text-align:center;"> Start </td>
+     <th style="text-align:center;"> Destination </td>
+     <th style="text-align:center;"> Transfer At </td>
+     <th style="text-align:center;"> First Line </td>
+     <th style="text-align:center;"> Second Line </th>
+     <tr ng-repeat="x in data">
+     <td style="text-align:center;"> {{x.start.name}} </td>
+     <td style="text-align:center;"> {{x.destination.name}} </td>
+     <td style="text-align:center;"> {{x.transfer_station.name}} </td>
+     <td style="text-align:center;"> {{x.first_line.name}} </td>
+     <td style="text-align:center;"> {{x.second_line.name}} </td>
+     </tr>
+ </table>
+</div>
     </div>
   </section>
   <!-- services -->
-  
-  <!-- spacer section:testimonial -->
-
-
-  <!-- about -->
  
-  <!-- /about -->
-
-  <!-- spacer section:stats -->
-  <!-- <section id="parallax1" class="section pad-top40 pad-bot40" data-stellar-background-ratio="0.5">
-    <div class="container">
-      <div class="align-center pad-top40 pad-bot40">
-        <blockquote class="bigquote color-white">Indoctum accusamus comprehensam</blockquote>
-        <p class="color-white">Bootstraptaste</p>
-      </div>
-    </div>
-  </section> -->
-
-  <!-- section works -->
-  
-  <!-- map -->
-  <!-- <section id="section-map" class="clearfix">
-    <div id="google-map" data-latitude="40.713732" data-longitude="-74.0092704"></div>
-  </section> -->
 
   <head>
     <style>
@@ -152,7 +127,7 @@
       function initMap() {
         var uluru = {lat: 40.7589, lng: -73.9851};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
+          zoom: 4,
           center: uluru
         });
         var marker = new google.maps.Marker({
@@ -167,7 +142,7 @@
   </body>
 
 
-  <section id="footer" class="section footer">
+<section id="footer" class="section footer">
     <div class="container">
       <div class="row animated opacity mar-bot20" data-andown="fadeIn" data-animation="animation">
         <div class="col-sm-12 align-center">
@@ -250,8 +225,6 @@
 
   </section>
   <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
-
-
 </body>
 
 </html>

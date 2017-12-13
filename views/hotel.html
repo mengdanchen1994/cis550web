@@ -28,6 +28,7 @@
 </head>
 
 <body>
+  <div ng-controller="myHotelController">
   <section id="header" class="appear"></section>
   <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
     <div class="container">
@@ -47,6 +48,7 @@
           <li class="active"><a href="/hotel" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Hotel</a></li>
           <li class="active"><a href="/entertainment" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Entertainment</a></li>
           <li class="active"><a href="/signage" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Signage</a></li>
+		          <li class="active"><a href="/subway" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Subway</a></li>		  
           <li><a href="#footer" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Share</a></li>
 </ul>
       </div>
@@ -64,7 +66,7 @@
             <p >
               Please choose your location: 
             </p>
-            <div ng-controller="myHotelController">
+            
               <select name = "streetname" ng-model="streetname" style="color:black">
               <option value="all">All</option>
   <option value ="41 st">41 st</option>
@@ -96,27 +98,34 @@
 <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
             </h3>
-            <button type="button" ng-click="Submit()" class="btn btn-theme pull" style="color:black">Search</button>
-            <a type="button" href="#piechartshow" onclick="drawChart()" class="btn btn-theme pull" style="color:black">Show PieChart</a>
+            <button type="button" ng-click="Submit();showme1=true" class="btn btn-theme pull" style="color:black">Search</button>
+            <a type="button" ng-show="showme1" ng-click="showme2=true" href="#piechartshow" onclick="drawChart()" class="btn btn-theme pull" style="color:black">Show PieChart</a>
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
-     <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
+     
+        </div>
+    </div>
+    <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1100" align="center"> 
             <tr> 
-            <th>  Name </td>
-            <th>  Streetname </td>
-            <th>  Building </td>
-            <th>  Restuarant Count </td>
-            <th> Entertainment Count </th>
-            <th > Maps </th>
+            <th style="text-align:center;">  Name </td>
+            <th style="text-align:center;">  Street </td>
+            <th style="text-align:center;">  Building </td>
+            <th style="text-align:center;">  Restuarant Count </td>
+            <th style="text-align:center;"> Entertainment Count </th>
+             <th style="text-align:center;"> Phone Number</th>
+            <th width="12%" style="text-align:center;"> Website </th>
+            <th style="text-align:center;"> Get direction </th>
             <tr ng-repeat="x in data"> 
-            <td> {{x.NAME}} </td>
-            <td> {{x.STREETNAME}} </td>
-            <td> {{x.BUILDING}} </td>
-            <td> <a href="", onclick="c1(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.REST_N}} </a></td>
-            <td><a href="", onclick="c2(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.ENT_N}}</a></td>
-            <td> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Google Maps</a></td>
-            </tr>
+            <td style="text-align:center;"> {{x.NAME}} </td>
+            <td style="text-align:center;"> {{x.STREETNAME}} </td>
+            <td style="text-align:center;"> {{x.BUILDING}} </td>
+            <td style="text-align:center;"> <a href="", onclick="c1(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.REST_N}} </a></td>
+            <td style="text-align:center;"><a href="", onclick="c2(this);" id="{{x.NAME}}+{{x.STREETNAME}}+{{x.BUILDING}}">{{x.ENT_N}}</a></td>
+            <td style="text-align:center;"> {{x.PHONENUMBER}}</td>
+            <td style="text-align:center;"> <a href="" onclick="web(this);" id="{{x.WEBSITE}}">{{x.WEBSITE}}</a></td>
+            <td style="text-align:center;"> <a href="https://www.google.com/maps/search/+{{x.NAME}}+{{x.STREETNAME}}/@{{x.LATITUDE}},{{x.LONGITUDE}},12z/data=!3m1!4b1';", target="_blank">Get route</a></td>
+			</tr>
              <script language=javascript type="text/javascript">
     function c1(obj) {  
          var hotelname = obj.id;
@@ -128,14 +137,21 @@
          sessionStorage.setItem("senthotelthree", hotelname); 
          window.open("/hotel3","_blank");
     }  
+    function web(obj) {  
+         var hotelweb = obj.id;
+         if (hotelweb.startsWith("http")) {
+              window.open("" + hotelweb+ "","_blank");
+         } else {
+             window.open("http://" + hotelweb +"","_blank");
+         }
+         
+    }  
 </script>
         </table>
-        </div>
-    </div>
   </section>
 
   <!-- services -->
-  <section id="piechartshow" class="section pad-bot30 bg-white">
+  <section ng-show="showme2" id="piechartshow" class="section pad-bot30 bg-white">
     <div class="container">
       <table class = "columns">
         <tr>
@@ -246,212 +262,7 @@ data2.addRows(tableArr2);
   </section> -->
 
   <!-- section works -->
-  <section id="section-works" class="section appear clearfix">
-    <div class="container">
-
-      <div class="row mar-bot40">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="section-header">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Portfolio</h2>
-            <p>Here is all the pictures of Time Square</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- <nav id="filter" class="col-md-12 text-center">
-          <ul>
-            <li><a href="#" class="current btn-theme btn-small" data-filter="*">All</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".webdesign">Food</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".photography">Hotel</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".print">Entertainment</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".print">Signage</a></li>
-          </ul>
-        </nav> -->
-        <div class="col-md-12">
-          <div class="row">
-            <div class="portfolio-items isotopeWrapper clearfix" id="3">
-
-              <article class="col-md-4 isotopeItem webdesign">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img1.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img1.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img2.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img2.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img3.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img3.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img4.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img4.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img5.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img5.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem webdesign">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img6.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img6.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img7.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img7.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img8.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img8.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img9.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img9.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-
-          </div>
-
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <!-- <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">
-    <div class="align-center pad-top40 pad-bot40">
-      <blockquote class="bigquote color-white">Indoctum accusamus comprehensam</blockquote>
-      <p class="color-white">Bootstraptaste</p>
-    </div>
-  </section> -->
-
-  <!-- contact -->
-  <section id="section-contact" class="section appear clearfix">
-    <div class="container">
-
-      <div class="row mar-bot40">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="section-header">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Contact us</h2>
-            <p>If you have any questions about Time Square. Please Contact us! </p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="cform" id="contact-form">
-            <div id="sendmessage">
-              Your message has been sent. Thank you!
-            </div>
-            <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
-              <div class="form-group">
-                <label for="name">Your Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="email">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
-                <div class="validation"></div>
-              </div>
-
-              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
-            </form>
-
-          </div>
-        </div>
-        <!-- ./span12 -->
-      </div>
-
-    </div>
-  </section>
-  <!-- map -->
-  <!-- <section id="section-map" class="clearfix">
-    <div id="google-map" data-latitude="40.713732" data-longitude="-74.0092704"></div>
-  </section> -->
+  
 
   <head>
     <style>
