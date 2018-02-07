@@ -1,1 +1,1 @@
-
+The topic of our project is guidance of Time Square, which contains the part of food, hotel, entertainment, signage and traffic. It is running by node.js with html files. The sql database is based on MySQL hosted in AWS and no sql database is based on neo4j hosted in GRAPHENE. 
