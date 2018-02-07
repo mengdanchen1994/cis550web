@@ -10,6 +10,7 @@
   <!-- BASICS -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
   <script src="javascripts/app.js" type="text/javascript"></script>
+  <script src="//connect.facebook.net/en_US/all.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="description" content="">
@@ -26,7 +27,34 @@
   </style> 
 </head>
 
-<body>
+<body ng-app="angularjsNodejsTutorial" ng-controller="myController">
+<div id="fb-root"></div>
+  <script>
+  window.onload = function(){
+    FB.init({
+      appId            : '1964953380437500',
+      autoLogAppEvents : true,
+      xfbml            : true,
+	  status           : true,
+      version          : 'v2.11'
+    });
+	FB.getLoginStatus(function(response){
+		if(response.status==='connected'){
+		}else if(response.status === 'not_authorized'){
+		}else{
+		}
+	});
+  };
+
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  </script>
   <section id="header" class="appear"></section>
   <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:100px; height:100px; background-color:rgba(0,0,0,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(0,0,0,1);">
     <div class="container">
@@ -47,8 +75,10 @@
           <li><a href="#section-contact" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Contact</a></li>
           <li><a href="#section-map" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Map</a></li>
           <li><a href="#footer" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Share</a></li>
-          <li><a href="/fb" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Sign In</a></li>
-</ul>
+          <li><a style="color:white;text-shadow: black 0.1em 0.1em 0.2em" ng-click="onFBLogin();showme=true;"  value="login" ng-hide="showme">Facebook Sign In</a></li>
+		  <td><a style="color:white;"><img class="member-photo" src="{{facebook.id}}" style="width:80px; height:80px" ng-show="showme"></a></td>
+		  <td><a style="color:white;">{{facebook.username}}</a></td>
+     </ul>
       </div>
 
       <!--/.navbar-collapse -->
@@ -65,77 +95,103 @@
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               This is Time Square Travel Guide. You can find most popular resturants, hotels, entertainments and signages near Time Square.
             </h3>
-			<div ng-controller="myController">
             <input name="name" ng-model="name" value="eg.hilton, starbuck" style="color:black">
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
             </h3>
-                        <button type="button" ng-click="Submit()" class="btn btn-theme pull" style="color:black">Search</button>
+                        <button type="button" ng-click="Submit();showme1=true" class="btn btn-theme pull" style="color:black">Search</button>
 
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
-		        <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="600" align="center"> 
-            <tr> 
-            <th>  Name </td>
-            <th>  Type </td>
-            <th>  Streetname </td>
-            <th>  Building </td>
-            <th > Maps </th>
-            <tr ng-repeat="x in data"> 
-            <td> {{x.NAME}} </td>
-            <td> {{x.TYPE}} </td>
-            <td> {{x.STREETNAME}} </td>
-            <td> {{x.BUILDING}} </td>
-             <td> <a href="#section-map" ng-click="initMap(x.LATITUDE,x.LONGITUDE)">Google Maps</a></td>
-            </tr>
-        </table>
+		        
 		</div>
     </div>
+    <table ng-show="showme1" id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1100" align="center"> 
+            <tr> 
+            <th style="text-align:center;">  Name </td>
+            <th style="text-align:center;">  Type </td>
+            <th style="text-align:center;">  Street </td>
+            <th style="text-align:center;">  Building </td>
+            <th width="10%" style="text-align:center;"> Phone Number</th>
+            <th width="13%" style="text-align:center;"> Website </th>
+            <th > Maps </th>
+			<th style="text-align:center;">  Go by Subway </td>
+            <tr ng-repeat="x in data"> 
+            <td style="text-align:center;"> {{x.NAME}} </td>
+            <td style="text-align:center;"> {{x.TYPE}} </td>
+            <td style="text-align:center;"> {{x.STREETNAME}} </td>
+            <td style="text-align:center;"> {{x.BUILDING}} </td>
+            <td style="text-align:center;"> {{x.PHONENUMBER}}</td>
+            <td style="text-align:center;"> <a href="" onclick="web(this);" id="{{x.WEBSITE}}">{{x.WEBSITE}}</a></td>
+             <td style="text-align:center;"> <a href="#section-map" ng-click="initMap(x.LATITUDE,x.LONGITUDE)">Google Maps</a></td>
+            <td style="text-align:center;"> <a href="/subway?destlong={{x.LONGITUDE}}&amp;destlat={{x.LATITUDE}}">Go!</a> </td>
+			</tr>
+      <script language=javascript type="text/javascript">
+    function web(obj) {  
+         var hotelweb = obj.id;
+         if (hotelweb.startsWith("http")) {
+              window.open("" + hotelweb+ "","_blank");
+         } else {
+             window.open("http://" + hotelweb +"","_blank");
+         }
+         
+    }  
+</script>
+        </table>
   </section>
 
   
     <section id="section-services" class="section pad-bot30 bg-white">
     <div class="container">
         <div class="row align-center mar-bot40">
-        <div class="col-md-3">
+        <div class="col-md-23">
           <div class="team-member">
             <figure class="member-photo">
 			<a href="/food">
-			<img src="http://localhost:8080/img/parallax/index1.jpg" alt="Norway" width="250" height="250"/>
+			<img src="http://localhost:8080/img/parallax/index1.jpg" alt="Norway" width="200" height="200" >
       <div class="index" style="color:black"><b>Food</b></div>
       </a>
 	
 			</figure>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-23">
           <div class="team-member">
             <figure class="member-photo">
 			<a href="/hotel">
-			<img src="http://localhost:8080/img/parallax/index2.jpg" alt="Norway" width="250" height="250">
+			<img src="http://localhost:8080/img/parallax/index2.jpg" alt="Norway" width="200" height="200" >
       <div class="index" style="color:black"><b>Hotel</b></div>
 			</a>
 			</figure>
 
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-23">
           <div class="team-member">
             <figure class="member-photo"><a href="/entertainment">
-			<img src="http://localhost:8080/img/parallax/index3.jpg" alt="" width="250" height="250"/>
+			<img src="http://localhost:8080/img/parallax/index3.jpg" alt="Norway" width="200" height="200"/>
       <div class="index" style="color:black"><b>Entertainment</b></div>
 			</a></figure>
 
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-23">
           <div class="team-member">
             <figure class="member-photo"><a href="/signage">
-			<img src="http://localhost:8080/img/parallax/index4.jpg" alt="" width="250" height="250"/>
+			<img src="http://localhost:8080/img/parallax/index4.jpg" alt="Norway" width="200" height="200"/>
       <div class="index" style="color:black"><b>Signages</b></div>
     </a></figure>
 
+	          </div>
+        </div>
+        <div class="col-md-23">
+          <div class="team-member">
+            <figure class="member-photo"><a href="/subway">
+			<img src="http://localhost:8080/img/parallax/index5.jpg" alt="Norway" width="200" height="200"/>
+      <div class="index" style="color:black"><b>Subway</b></div>
+    </a></figure>
+	
           </div>
         </div>
       </div>
@@ -164,7 +220,7 @@
       <div class="row mar-bot40">
         <div class="col-md-offset-3 col-md-6">
           <div class="section-header">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Recommendation</h2>
+            <h2 class="section-heading animated" data-animation="bounceInUp">Gallery</h2>
             <p>Here is all the pictures of Time Square</p>
           </div>
         </div>
@@ -187,24 +243,25 @@
               <article class="col-md-4 isotopeItem webdesign">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img1.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img1.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                      <h5><a href="#">Ruby's Diner</a></h5>
+                      <a href="https://www.rubys.com/" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem photography">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img2.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img2.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                      <h5><a href="#">Hilton Garden Inn</a></h5>
+                      <h5><a href="#">(212)581-7000</a></h5>
+                      <a href="http://www.hiltonworldwide.com" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
@@ -212,84 +269,85 @@
               <article class="col-md-4 isotopeItem photography">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img3.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img3.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
+                      <h5><a href="#">Sushi of Gari</a></h5>
+                       <h5><a href="#">(212)-957-0046</a></h5>
+                      <a href="http://www.sushiofgari.com" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem print">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img4.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img4.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem photography">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img5.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img5.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem webdesign">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img6.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img6.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem print">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img7.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img7.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem photography">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img8.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img8.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
 
               <article class="col-md-4 isotopeItem print">
                 <div class="portfolio-item">
                   <img src="http://localhost:8080/img/portfolio/img9.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
+                  <!-- <div class="portfolio-desc align-center">
                     <div class="folio-info">
                       <h5><a href="#">Portfolio name</a></h5>
                       <a href="http://localhost:8080/img/portfolio/img9.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </article>
             </div>
@@ -310,7 +368,7 @@
   </section> -->
 
   <!-- about -->
-  <section id="section-about" class="section appear clearfix">
+<section id="section-about" class="section appear clearfix">
     <div class="container">
 
       <div class="row mar-bot40">
@@ -325,7 +383,7 @@
       <div class="row align-center mar-bot40">
         <div class="col-md-3">
           <div class="team-member">
-            <figure class="member-photo"><img src="public/img/team/member1.jpg" alt="" /></figure>
+            <figure class="member-photo"><img src="http://localhost:8080/img/portfolio/member1.jpg" alt="Norway" width="250" height="250" /></figure>
             <div class="team-detail">
               <h4>Danmeng Chen</h4>
               <span>Web Designer/Web Developer</span>
@@ -334,7 +392,7 @@
         </div>
         <div class="col-md-3">
           <div class="team-member">
-            <figure class="member-photo"><img src="public/img/team/member2.jpg" alt="" /></figure>
+            <figure class="member-photo"><img src="http://localhost:8080/img/portfolio/member2.jpg" alt="Norway" width="250" height="250" /></figure>
             <div class="team-detail">
               <h4>Zhuoyu Ding</h4>
               <span>Web developer/Database developer</span>
@@ -343,7 +401,7 @@
         </div>
         <div class="col-md-3">
           <div class="team-member">
-            <figure class="member-photo"><img src="public/img/team/member3.jpg" alt="" /></figure>
+            <figure class="member-photo"><img src="http://localhost:8080/img/portfolio/member3.jpg" alt="Norway" width="250" height="250" /></figure>
             <div class="team-detail">
               <h4>Chuqi He</h4>
               <span>Database developer/Data Engineer</span>
@@ -352,10 +410,10 @@
         </div>
         <div class="col-md-3">
           <div class="team-member">
-            <figure class="member-photo"><img src="public/img/team/member4.jpg" alt="" /></figure>
+            <figure class="member-photo"><img src="http://localhost:8080/img/portfolio/member4.jpg" alt="Norway" width="250" height="250" /></figure>
             <div class="team-detail">
               <h4>Jiachen Wang</h4>
-              <span>Web Developer</span>
+              <span>Others</span>
             </div>
           </div>
         </div>
@@ -386,14 +444,16 @@
             <form action="" method="post" role="form" class="contactForm">
               <div class="form-group">
                 <label for="name">Your Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <input type="text" name="name" class="form-control" id="nameemail" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                 <div class="validation"></div>
               </div>
+
               <div class="form-group">
-                <label for="email">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                <label for="subject">Contact Email</label>
+                <input type="text" class="form-control" name="email" id="email" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
                 <div class="validation"></div>
               </div>
+             
               <div class="form-group">
                 <label for="subject">Subject</label>
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
@@ -401,11 +461,31 @@
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
+                <textarea class="form-control" name="message" rows="5" name="message" id="message" data-rule="required" data-msg="Please write something for us"></textarea>
                 <div class="validation"></div>
               </div>
+              <a href="" type="button" onclick="c1()" class="btn btn-theme pull-left">SEND MESSAGE</a>
+               <script language=javascript type="text/javascript">
+    function c1() {  
+         var subject = document.getElementById("subject").value;
+         var name = document.getElementById("nameemail").value;
+        var email = document.getElementById("email").value;
+          var body1 = document.getElementById("message").value;
+          var arr = body1.split("\n");
+          var body = "";
+          for (var j = 0; j < arr.length; j++) {
+            body = body + arr[j] + "%0D%0A";
+}
+         window.location.href = "mailto:danmengc@seas.upenn.edu?subject=" + subject+ " From " + name + "&body=Name: " + name + "%0D%0A Subject: " + subject + "%0D%0AMessage:%0D%0A" + body + "%0D%0AContact Email: " + email;
+    }  
 
-              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
+</script>
+
+              <script type="text/javascript">
+                function sentmessage() {
+                  alert("Thank you for sending us your message!\nWe have already recieved your message!\nWe will reply to you ASAP!")
+                }
+              </script>
             </form>
 
           </div>
