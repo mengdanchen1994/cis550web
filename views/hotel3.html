@@ -51,7 +51,9 @@
 
   <section class="featured" style="background-image: url(http://localhost:8080/img/parallax/signagebg.jpg);">
   <div ng-controller="myhotelthreeController" ng-init="Submit()">
-  <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="500" align="center"> 
+  	         <div class="align-center">
+            <h2 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Entertainments Nearby</h2>
+  <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1000" align="center"> 
   <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
               
             </h3>
@@ -59,19 +61,34 @@
              
             </h3>
             <tr> 
-            <th> Name </td>
-            <th> StreetName </th>
-            <th> Building </th>
-            <th> Type </td>
-            <th> Distence </td>
+            <th "text-align:center;"> Name </td>
+            <th "text-align:center;"> Street </th>
+            <th "text-align:center;"> Building </th>
+            <th "text-align:center;"> Type </td>
+            <th "text-align:center;"> Distence(km) </td>
+                <th "text-align:center;"> Phone Number</th>
+            <th "text-align:center;"> Website </th>
             <tr ng-repeat="x in data"> 
-            <td> {{x.NAME}} </td>
-            <td> {{x.STREETNAME}} </td>
-            <td> {{x.BUILDING}} </td>
-            <td> {{x.TYPE}} </td>
-            <td> {{x.DISTENCE}} </td>
+            <td "text-align:center;"> {{x.NAME}} </td>
+            <td "text-align:center;"> {{x.STREETNAME}} </td>
+            <td "text-align:center;"> {{x.BUILDING}} </td>
+            <td "text-align:center;"> {{x.TYPE}} </td>
+            <td "text-align:center;"> {{x.DISTENCE}} </td>
+             <td "text-align:center;"> {{x.PHONENUMBER}}</td>
+            <td "text-align:center;"> <a href="" onclick="web(this);" id="{{x.WEBSITE}}">{{x.WEBSITE}}</a></td>
       </tr>
       </tr>
+      <script language=javascript type="text/javascript">
+    function web(obj) {  
+         var hotelweb = obj.id;
+         if (hotelweb.startsWith("http")) {
+              window.open("" + hotelweb+ "","_blank");
+         } else {
+             window.open("http://" + hotelweb +"","_blank");
+         }
+         
+    }  
+</script>
 </table>
 
     </div>

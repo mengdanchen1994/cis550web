@@ -53,26 +53,27 @@
     <div ng-controller="myFoodnnController" ng-init="Submit()">
   <table id="miyazaki" border="0" cellpadding="10" cellspacing="1" width="1300" align="center"> 
   <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
-              
+              <div class="align-center">
+            <h2 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">Inspection results</h2>          
             </h3>
             <h3 class="slogan" style="color:white;text-shadow: black 0.1em 0.1em 0.2em">
              
             </h3>
             <tr> 
-            <th>  Name </td>
-            <th>  StreetName</th>
-            <th>  Building </th>
-            <th>  Inspection Date </td>
-            <th>  Voilation Code </td>
-            <th>  Score </td>
-            <th> Description</th>
+            <th style="text-align:center;">  Name </td>
+            <th style="text-align:center;">  Street</th>
+            <th style="text-align:center;">  Building </th>
+            <th style="text-align:center;">  Inspection Date </td>
+            <th style="text-align:center;">  Voilation Code </td>
+            <th style="text-align:center;">  Score </td>
+            <th width="46%" style="text-align:center;"> Description</th>
             <tr ng-repeat="x in data"> 
-            <td> {{x.NAME}} </td>
-            <td> {{x.STREETNAME}} </td>
-            <td> {{x.BUILDING}} </td>
-            <td> {{x.INSPECTIONDATE}} </td>
-            <td> {{x.VIOLATIONCODE}} </td>
-            <td> {{x.SCORE}} </td>
+            <td style="text-align:center;"> {{x.NAME}} </td>
+            <td style="text-align:center;"> {{x.STREETNAME}} </td>
+            <td style="text-align:center;"> {{x.BUILDING}} </td>
+            <td style="text-align:center;"> {{x.INSPECTIONDATE}} </td>
+            <td style="text-align:center;"> {{x.VIOLATIONCODE}} </td>
+            <td style="text-align:center;"> {{x.SCORE}} </td>
             <td> {{x.DESCRIPTION}} </td>
       </tr>
       </tr>
@@ -99,212 +100,7 @@
   </section> -->
 
   <!-- section works -->
-  <section id="section-works" class="section appear clearfix">
-    <div class="container">
 
-      <div class="row mar-bot40">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="section-header">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Portfolio</h2>
-            <p>Here is all the pictures of Time Square</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- <nav id="filter" class="col-md-12 text-center">
-          <ul>
-            <li><a href="#" class="current btn-theme btn-small" data-filter="*">All</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".webdesign">Food</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".photography">Hotel</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".print">Entertainment</a></li>
-            <li><a href="#" class="btn-theme btn-small" data-filter=".print">Signage</a></li>
-          </ul>
-        </nav> -->
-        <div class="col-md-12">
-          <div class="row">
-            <div class="portfolio-items isotopeWrapper clearfix" id="3">
-
-              <article class="col-md-4 isotopeItem webdesign">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img1.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img1.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img2.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img2.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img3.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img3.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img4.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img4.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img5.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img5.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem webdesign">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img6.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img6.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img7.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img7.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem photography">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img8.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img8.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="col-md-4 isotopeItem print">
-                <div class="portfolio-item">
-                  <img src="http://localhost:8080/img/portfolio/img9.jpg" alt="" />
-                  <div class="portfolio-desc align-center">
-                    <div class="folio-info">
-                      <h5><a href="#">Portfolio name</a></h5>
-                      <a href="http://localhost:8080/img/portfolio/img9.jpg" class="fancybox"><i class="fa fa-plus fa-2x"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-
-          </div>
-
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <!-- <section id="parallax2" class="section parallax" data-stellar-background-ratio="0.5">
-    <div class="align-center pad-top40 pad-bot40">
-      <blockquote class="bigquote color-white">Indoctum accusamus comprehensam</blockquote>
-      <p class="color-white">Bootstraptaste</p>
-    </div>
-  </section> -->
-
-  <!-- contact -->
-  <section id="section-contact" class="section appear clearfix">
-    <div class="container">
-
-      <div class="row mar-bot40">
-        <div class="col-md-offset-3 col-md-6">
-          <div class="section-header">
-            <h2 class="section-heading animated" data-animation="bounceInUp">Contact us</h2>
-            <p>If you have any questions about Time Square. Please Contact us! </p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="cform" id="contact-form">
-            <div id="sendmessage">
-              Your message has been sent. Thank you!
-            </div>
-            <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
-              <div class="form-group">
-                <label for="name">Your Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="email">Your Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
-                <div class="validation"></div>
-              </div>
-
-              <button type="submit" class="btn btn-theme pull-left">SEND MESSAGE</button>
-            </form>
-
-          </div>
-        </div>
-        <!-- ./span12 -->
-      </div>
-
-    </div>
-  </section>
-  <!-- map -->
-  <!-- <section id="section-map" class="clearfix">
-    <div id="google-map" data-latitude="40.713732" data-longitude="-74.0092704"></div>
-  </section> -->
 
   <head>
     <style>

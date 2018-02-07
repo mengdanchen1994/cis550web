@@ -15,6 +15,74 @@ app.controller('myController', function($scope, $http) {
 	  console.log("Latitude: " + latitude);
 	  console.log("Longitude: " + lon);
       if(latitude==undefined && lon==undefined) {
+        alert("Unable to Get the Location in detail!So we turn to the default location!")
+      }
+	  if(latitude==undefined){
+		  latitude = 40.7589;
+	  }
+	  if(lon==undefined){
+		  lon = -73.9851;
+	  } 
+
+        var uluru = {lat: parseFloat(latitude), lng: parseFloat(lon)};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      };
+	  
+	  	  $scope.facebook = {
+		  username: "",
+		  email: "",
+		  id:""
+	  };
+	  
+	  $scope.onFBLogin = function(){
+
+
+		  FB.login(function(response){			  
+			  if(response.authResponse){
+				  FB.api('/me','GET',{fields:'email, first_name,name,id,picture'},function(response){
+					  
+					  $scope.$apply(function(){
+						  $scope.facebook.username = response.name;
+						  $scope.facebook.email = response.email;
+						  $scope.facebook.id = "http://graph.facebook.com/"+response.id+"/picture?type=large";
+					  });
+					  
+				  });
+			  }else{
+				  //error
+			  }
+	  },{
+		  scope:'email, user_likes',
+		  return_scopes:true
+	  });
+	  }
+});
+
+
+app.controller('myFoodController', function($scope, $http) {
+        $scope.message="";
+		console.log('ddd')
+        $scope.Find = function() {
+        var request = $http.get('/datafood/'+$scope.streetname+'&'+$scope.cuisine);
+        request.success(function(data) {
+            $scope.data = data;
+        });
+        request.error(function(data){
+            console.log('err');
+        });
+    
+    }; 
+	 $scope.initMap = function (latitude, lon) {
+	  console.log("Latitude: " + latitude);
+	  console.log("Longitude: " + lon);
+      if(latitude==undefined && lon==undefined) {
         alert("Unable to Get the Location in detail!")
       }
 	  if(latitude==undefined){
@@ -34,22 +102,6 @@ app.controller('myController', function($scope, $http) {
           map: map
         });
       };
-});
-
-
-app.controller('myFoodController', function($scope, $http) {
-        $scope.message="";
-		console.log('ddd')
-        $scope.Find = function() {
-        var request = $http.get('/datafood/'+$scope.streetname+'&'+$scope.cuisine);
-        request.success(function(data) {
-            $scope.data = data;
-        });
-        request.error(function(data){
-            console.log('err');
-        });
-    
-    }; 
 	});
 
 app.controller('myFoodnnController', function($scope, $http, $location) {
@@ -144,6 +196,29 @@ app.controller('myEntertainmentController', function($scope, $http) {
         });
     
     }; 
+	 $scope.initMap = function (latitude, lon) {
+	  console.log("Latitude: " + latitude);
+	  console.log("Longitude: " + lon);
+      if(latitude==undefined && lon==undefined) {
+        alert("Unable to Get the Location in detail!")
+      }
+	  if(latitude==undefined){
+		  latitude = 40.7589;
+	  }
+	  if(lon==undefined){
+		  lon = -73.9851;
+	  } 
+
+        var uluru = {lat: parseFloat(latitude), lng: parseFloat(lon)};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 18,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      };
 });
 
 app.controller('mySignageController', function($scope, $http) {
@@ -229,4 +304,41 @@ app.controller('insertController', function($scope, $http) {
         });
     };
     
+});
+
+app.controller('mySubwayController', function($scope, $http) {
+      $scope.message="";
+      $scope.user={};
+      $scope.dest={};
+      console.log($scope);
+      $scope.Submit = function() {
+        var request = $http.get('/routessubway/'+$scope.user.longitude+'&'+$scope.user.latitude
+            +'&'+$scope.dest.longitude+'&'+$scope.dest.latitude
+          );
+        request.success(function(data) {
+            $scope.data = data;
+        });
+        request.error(function(data){
+            console.log('err');
+        });
+    };
+    function getUrlVars() {
+      var vars = [], hash;
+      var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+      for(var i = 0; i < hashes.length; i++)
+          {
+           hash = hashes[i].split('=');
+           vars.push(hash[0]);
+           vars[hash[0]] = hash[1];
+           }
+
+       return vars;
+    }
+    // Prepopulate the input from url params
+    var urlParams = getUrlVars();
+    $scope.user.longitude = Math.abs(parseFloat(urlParams['userlong']));
+    $scope.user.latitude = Math.abs(parseFloat(urlParams['userlat']));
+    $scope.dest.longitude = Math.abs(parseFloat(urlParams['destlong']));
+    $scope.dest.latitude = Math.abs(parseFloat(urlParams['destlat']));
 });
